@@ -39,6 +39,11 @@ wget -q --show-progress --https-only --timestamping \
 ```
 
 ```
+mv cfssl_1.6.1_linux_amd64 cfssl
+mv cfssljson_1.6.1_linux_amd64 cfssljson
+```
+
+```
 chmod +x cfssl cfssljson
 ```
 
