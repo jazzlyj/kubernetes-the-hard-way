@@ -62,16 +62,15 @@ cfssl version
 > output
 
 ```
-Version: 1.2.0
-Revision: dev
-Runtime: go1.6
+Version: 1.6.1
+Runtime: go1.12.12
 ```
 
 ```
 cfssljson --version
 ```
 ```
-Version: 1.4.1
+Version: 1.6.1
 Runtime: go1.12.12
 ```
 
