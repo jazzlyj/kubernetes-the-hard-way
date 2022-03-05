@@ -1,3 +1,5 @@
+Previous: [Installing the Client Tools](02-client-tools.md)
+
 # Provisioning Compute Resources
 
 Kubernetes requires a set of machines to host the Kubernetes control plane and the worker nodes where containers are ultimately run. In this lab you will provision the compute resources required for running a secure and highly available Kubernetes cluster across a single [compute zone](https://cloud.google.com/compute/docs/regions-zones/regions-zones).
