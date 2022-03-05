@@ -112,9 +112,16 @@ admin.pem
 Kubernetes uses a [special-purpose authorization mode](https://kubernetes.io/docs/admin/authorization/node/) called Node Authorizer, that specifically authorizes API requests made by [Kubelets](https://kubernetes.io/docs/concepts/overview/components/#kubelet). In order to be authorized by the Node Authorizer, Kubelets must use a credential that identifies them as being in the `system:nodes` group, with a username of `system:node:<nodeName>`. In this section you will create a certificate for each Kubernetes worker node that meets the Node Authorizer requirements.
 
 
-Set the variables `EXTERNAL_IP` and `INTERNAL_IP` of the worker node instances
+Set the variables `EXTERNAL_IP_worker${instance}` and `INTERNAL_IP_worker${instance}` of the worker node instances
 ```
- 
+export EXTERNAL_IP_worker1=NodesExternalIP
+export EXTERNAL_IP_worker2=NodesExternalIP
+export EXTERNAL_IP_worker3=NodesExternalIP
+
+export INTERNAL_IP_worker1=NodesInternalIP
+export INTERNAL_IP_worker2=NodesInternalIP
+export INTERNAL_IP_worker3=NodesInternalIP
+
 ```
 
 
