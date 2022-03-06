@@ -35,7 +35,7 @@ EOF
 ```
 
 Copy the `encryption-config.yaml` encryption config file to each controller instance:
-* Assumes you are doing this from controller1
+* NOTE: Assumes you are doing this from controller1
 
 ```
 for instance in controller1 controller2 ; do
