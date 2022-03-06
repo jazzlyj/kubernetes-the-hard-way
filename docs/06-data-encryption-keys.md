@@ -39,7 +39,7 @@ Copy the `encryption-config.yaml` encryption config file to each controller inst
 * ???? Does this need to go to the etcd hosts ????
 
 ```
-for instance in controller1 controller2 ; do
+for instance in controller2 controller3 ; do
   scp encryption-config.yaml ${instance}:~/
 done
 ```
