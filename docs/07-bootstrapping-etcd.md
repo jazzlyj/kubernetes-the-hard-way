@@ -42,10 +42,23 @@ Extract and install the `etcd` server and the `etcdctl` command line utility:
 ```
 {
   sudo mkdir -p /etc/etcd /var/lib/etcd
-  sudo chmod 700 /var/lib/etcd
   sudo cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/
 }
 ```
+
+* alt create etcd user and run as etcd user
+```
+{
+  sudo mkdir -p /etc/etcd /var/lib/etcd
+  groupadd -f -g 1501 etcd
+  useradd -c "etcd user" -d /var/lib/etcd -s /bin/false -g etcd -u 1501 etcd
+  chown -R etcd:etcd /var/lib/etcd
+  sudo cp ca.pem kubernetes-key.pem kubernetes.pem /etc/etcd/
+}
+```
+
+
+
 
 The instance internal IP address will be used to serve client requests and communicate with etcd cluster peers. Set the `INTERNAL_IP` env var below to the one belonging to the etcd node you are configuring.
 
@@ -108,6 +121,7 @@ EOF
   sudo systemctl daemon-reload
   sudo systemctl enable etcd
   sudo systemctl start etcd
+  systemctl status -l etcd.service
 }
 ```
 
@@ -125,7 +139,15 @@ HOST_3=10.240.0.33
 ENDPOINTS=$HOST_1:2379,$HOST_2:2379,$HOST_3:2379
 ```
 
-List the etcd cluster members:
+* check health
+```
+etcdctl --write-out="table" member list
+etcdctl --write-out="table" endpoint health
+etcdctl --write-out="table" endpoint status
+```
+
+
+* List the etcd cluster members:
 
 ```
 sudo ETCDCTL_API=3 etcdctl member list \
@@ -138,9 +160,6 @@ sudo ETCDCTL_API=3 etcdctl member list \
 > output
 
 ```
-3a57933972cb5131, started, controller-2, https://10.240.0.12:2380, https://10.240.0.12:2379, false
-f98dc20bce6225a0, started, controller-0, https://10.240.0.10:2380, https://10.240.0.10:2379, false
-ffed16798470cab5, started, controller-1, https://10.240.0.11:2380, https://10.240.0.11:2379, false
 ```
 
 Next: [Bootstrapping the Kubernetes Control Plane](08-bootstrapping-kubernetes-controllers.md)
