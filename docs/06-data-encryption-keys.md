@@ -36,6 +36,7 @@ EOF
 
 Copy the `encryption-config.yaml` encryption config file to each controller instance:
 * NOTE: Assumes you are doing this from controller1
+* ???? Does this need to go to the etcd hosts ????
 
 ```
 for instance in controller1 controller2 ; do
