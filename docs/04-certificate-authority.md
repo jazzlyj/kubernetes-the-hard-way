@@ -132,7 +132,7 @@ Generate a certificate and private key for each Kubernetes worker node:
 
 
 ```
-for instance in worker-0 worker-1 worker-2; do
+for instance in worker1 worker2 worker3; do
 cat > ${instance}-csr.json <<EOF
 {
   "CN": "system:node:${instance}",
@@ -151,30 +151,28 @@ cat > ${instance}-csr.json <<EOF
   ]
 }
 EOF
+done
+```
 
-EXTERNAL_IP=EXTERNAL_IP_worker${instance}
-
-INTERNAL_IP=INTERNAL_IP_worker${instance}
-
+run this command for each node (change worker3)
+```
 cfssl gencert \
   -ca=ca.pem \
   -ca-key=ca-key.pem \
   -config=ca-config.json \
-  -hostname=${instance},${EXTERNAL_IP},${INTERNAL_IP} \
-  -profile=kubernetes \
-  ${instance}-csr.json | cfssljson -bare ${instance}
-done
+  -hostname=worker3,$EXTERNAL_IP_worker3,$INTERNAL_IP_worker3 \
+  -profile=kubernetes worker3-csr.json | cfssljson -bare worker3
 ```
 
 Results:
 
 ```
-worker-0-key.pem
-worker-0.pem
-worker-1-key.pem
-worker-1.pem
-worker-2-key.pem
-worker-2.pem
+worker1-key.pem
+worker1.pem
+worker2-key.pem
+worker2.pem
+worker3-key.pem
+worker3.pem
 ```
 
 ### The Controller Manager Client Certificate
