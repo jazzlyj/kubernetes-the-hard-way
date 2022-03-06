@@ -65,7 +65,7 @@ Extract and install the `etcd` server and the `etcdctl` command line utility:
 The instance internal IP address will be used to serve client requests and communicate with etcd cluster peers. Set the `INTERNAL_IP` env var below to the one belonging to the etcd node you are configuring.
 
 ```
-export INTERNAL_IP='10.10.1.X'
+export INTERNAL_IP='10.240.0.XYZ'
 ```
 
 or "automatically":
