@@ -4,15 +4,18 @@ Kubernetes components are stateless and store cluster state in [etcd](https://gi
 
 ## Prerequisites
 
-The commands in this lab must be run on each controller instance: `controller-0`, `controller-1`, and `controller-2`. Login to each controller instance using the `gcloud` command. Example:
+The commands in this lab must be run on each controller instance: `controller1`, `controller2`, and `controller3`. Login to each controller instance using the `gcloud` command. Example:
 
 ```
-gcloud compute ssh controller-0
+ssh controller1
 ```
 
 ### Running commands in parallel with tmux
 
 [tmux](https://github.com/tmux/tmux/wiki) can be used to run commands on multiple compute instances at the same time. See the [Running commands in parallel with tmux](01-prerequisites.md#running-commands-in-parallel-with-tmux) section in the Prerequisites lab.
+
+
+
 
 ## Bootstrapping an etcd Cluster Member
 
@@ -44,17 +47,22 @@ Extract and install the `etcd` server and the `etcdctl` command line utility:
 }
 ```
 
-The instance internal IP address will be used to serve client requests and communicate with etcd cluster peers. Retrieve the internal IP address for the current compute instance:
+The instance internal IP address will be used to serve client requests and communicate with etcd cluster peers. Set the `INTERNAL_IP` env var below to the one belonging to the etcd node you are configuring.
 
 ```
-INTERNAL_IP=$(curl -s -H "Metadata-Flavor: Google" \
-  http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/ip)
+export INTERNAL_IP='10.10.1.X'
 ```
+
+or "automatically":
+```
+INTERNAL_IP=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1)
+```
+
 
 Each etcd member must have a unique name within an etcd cluster. Set the etcd name to match the hostname of the current compute instance:
 
 ```
-ETCD_NAME=$(hostname -s)
+export ETCD_NAME=$(hostname -s)
 ```
 
 Create the `etcd.service` systemd unit file:
@@ -82,7 +90,7 @@ ExecStart=/usr/local/bin/etcd \\
   --listen-client-urls https://${INTERNAL_IP}:2379,https://127.0.0.1:2379 \\
   --advertise-client-urls https://${INTERNAL_IP}:2379 \\
   --initial-cluster-token etcd-cluster-0 \\
-  --initial-cluster controller-0=https://10.240.0.10:2380,controller-1=https://10.240.0.11:2380,controller-2=https://10.240.0.12:2380 \\
+  --initial-cluster etcd1=https://10.240.0.31:2380,etcd2=https://10.240.0.32:2380,etcd3=https://10.240.0.33:2380 \\
   --initial-cluster-state new \\
   --data-dir=/var/lib/etcd
 Restart=on-failure
@@ -103,9 +111,19 @@ EOF
 }
 ```
 
-> Remember to run the above commands on each controller node: `controller-0`, `controller-1`, and `controller-2`.
+> Remember to run the above commands on each etcd node: `etcd1`, `etcd2`, and `etcd3`.
 
 ## Verification
+
+
+* set endpoint env vars
+```
+export ETCDCTL_API=3
+HOST_1=10.240.0.31
+HOST_2=10.240.0.32
+HOST_3=10.240.0.33
+ENDPOINTS=$HOST_1:2379,$HOST_2:2379,$HOST_3:2379
+```
 
 List the etcd cluster members:
 
