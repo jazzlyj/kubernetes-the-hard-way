@@ -205,10 +205,12 @@ done
 
 Copy the appropriate `kube-controller-manager` and `kube-scheduler` kubeconfig files to each controller instance:
 * NOTE: Assumes you are doing this from controller1
+* ????: do they need to go to the etcd servers also????
+
 
 ```
 for instance in controller2 controller3; do
-  gcloud compute scp admin.kubeconfig kube-controller-manager.kubeconfig kube-scheduler.kubeconfig ${instance}:~/
+  scp admin.kubeconfig kube-controller-manager.kubeconfig kube-scheduler.kubeconfig ${instance}:~/
 done
 ```
 
