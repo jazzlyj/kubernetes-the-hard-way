@@ -1,3 +1,5 @@
+Previous: [Generating the Data Encryption Config and Key](06-data-encryption-keys.md)
+
 # Bootstrapping the etcd Cluster
 
 Kubernetes components are stateless and store cluster state in [etcd](https://github.com/etcd-io/etcd). In this lab you will bootstrap a three node etcd cluster and configure it for high availability and secure remote access.
