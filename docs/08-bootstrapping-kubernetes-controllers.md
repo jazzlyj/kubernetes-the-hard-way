@@ -126,6 +126,7 @@ sudo mv kube-controller-manager.kubeconfig /var/lib/kubernetes/
 ```
 
 Create the `kube-controller-manager.service` systemd unit file:
+* ???? --cluster-name=kubernetes, is that correct ???
 
 ```
 cat <<EOF | sudo tee /etc/systemd/system/kube-controller-manager.service
