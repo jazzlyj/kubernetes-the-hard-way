@@ -162,6 +162,9 @@ sudo ETCDCTL_API=3 etcdctl member list \
 > output
 
 ```
+2b7eeeb56e1e5dd5, started, etcd3, https://10.240.0.33:2380, https://10.240.0.33:2379, false
+aba103a3990978d1, started, etcd2, https://10.240.0.32:2380, https://10.240.0.32:2379, false
+bcdd1c791254e7f6, started, etcd1, https://10.240.0.31:2380, https://10.240.0.31:2379, false
 ```
 
 Next: [Bootstrapping the Kubernetes Control Plane](08-bootstrapping-kubernetes-controllers.md)
