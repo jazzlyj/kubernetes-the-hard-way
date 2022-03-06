@@ -411,6 +411,14 @@ service-account.pem
 
 ## Distribute the Client and Server Certificates
 
+Copy your private key to the host (controller1), start the ssh-agent and add the keys to the agent
+```
+rsync -av $USER@$MAINHOST:~/.ssh/id_ed25519 .
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+
 Copy the appropriate certificates and private keys to each worker instance:
 
 ```
