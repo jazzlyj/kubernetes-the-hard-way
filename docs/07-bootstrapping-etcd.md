@@ -7,7 +7,7 @@ Kubernetes components are stateless and store cluster state in [etcd](https://gi
 The commands in this lab must be run on each controller instance: `controller1`, `controller2`, and `controller3`. Login to each controller instance using the `gcloud` command. Example:
 
 ```
-ssh controller1
+ssh etcd1
 ```
 
 ### Running commands in parallel with tmux
