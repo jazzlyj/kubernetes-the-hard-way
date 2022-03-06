@@ -15,7 +15,7 @@ Each kubeconfig requires a Kubernetes API Server to connect to. To support high 
 The hostnames controller.example.com and kubernetes.example.com are supposed to point to the VIP (10.240.0.50) of the controller nodes
 
 ```
-export KUBERNETES_PUBLIC_IP_ADDRESS='10.240.0.50'
+export KUBERNETES_PUBLIC_ADDRESS='10.240.0.50'
 ```
 
 ### The kubelet Kubernetes Configuration File
