@@ -4,11 +4,7 @@ In this lab you will bootstrap three Kubernetes worker nodes. The following comp
 
 ## Prerequisites
 
-The commands in this lab must be run on each worker instance: `worker-0`, `worker-1`, and `worker-2`. Login to each worker instance using the `gcloud` command. Example:
-
-```
-gcloud compute ssh worker-0
-```
+The commands in this lab must be run on each worker instance: `worker1`, `worker2`, and `worker3`. Login to each worker instance. 
 
 ### Running commands in parallel with tmux
 
@@ -49,13 +45,13 @@ sudo swapoff -a
 
 ```
 wget -q --show-progress --https-only --timestamping \
-  https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.21.0/crictl-v1.21.0-linux-amd64.tar.gz \
-  https://github.com/opencontainers/runc/releases/download/v1.0.0-rc93/runc.amd64 \
-  https://github.com/containernetworking/plugins/releases/download/v0.9.1/cni-plugins-linux-amd64-v0.9.1.tgz \
-  https://github.com/containerd/containerd/releases/download/v1.4.4/containerd-1.4.4-linux-amd64.tar.gz \
-  https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubectl \
-  https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kube-proxy \
-  https://storage.googleapis.com/kubernetes-release/release/v1.21.0/bin/linux/amd64/kubelet
+  https://github.com/kubernetes-sigs/cri-tools/releases/download/v1.23.0/crictl-v1.23.0-linux-amd64.tar.gz \
+  https://github.com/opencontainers/runc/releases/download/v1.1.0/runc.amd64 \
+  https://github.com/containernetworking/plugins/releases/download/v1.0.1/cni-plugins-linux-amd64-v1.0.1.tgz \
+  https://github.com/containerd/containerd/releases/download/v1.6.0/containerd-1.6.0-linux-amd64.tar.gz \
+  https://storage.googleapis.com/kubernetes-release/release/v1.23.4/bin/linux/amd64/kubectl \
+  https://storage.googleapis.com/kubernetes-release/release/v1.23.4/bin/linux/amd64/kube-proxy \
+  https://storage.googleapis.com/kubernetes-release/release/v1.23.4/bin/linux/amd64/kubelet
 ```
 
 Create the installation directories:
@@ -75,9 +71,9 @@ Install the worker binaries:
 ```
 {
   mkdir containerd
-  tar -xvf crictl-v1.21.0-linux-amd64.tar.gz
-  tar -xvf containerd-1.4.4-linux-amd64.tar.gz -C containerd
-  sudo tar -xvf cni-plugins-linux-amd64-v0.9.1.tgz -C /opt/cni/bin/
+  tar -xvf crictl-v1.23.0-linux-amd64.tar.gz
+  tar -xvf containerd-1.6.0-linux-amd64.tar.gz -C containerd
+  sudo tar -xvf cni-plugins-linux-amd64-v1.0.1.tgz -C /opt/cni/bin/
   sudo mv runc.amd64 runc
   chmod +x crictl kubectl kube-proxy kubelet runc 
   sudo mv crictl kubectl kube-proxy kubelet runc /usr/local/bin/
@@ -87,11 +83,14 @@ Install the worker binaries:
 
 ### Configure CNI Networking
 
-Retrieve the Pod CIDR range for the current compute instance:
+
+Set the Pod CIDR range for the current compute instance:
+* NOTE: run this seperately on each node
 
 ```
-POD_CIDR=$(curl -s -H "Metadata-Flavor: Google" \
-  http://metadata.google.internal/computeMetadata/v1/instance/attributes/pod-cidr)
+POD_CIDR=10.200.1.0/24
+POD_CIDR=10.200.2.0/24
+POD_CIDR=10.200.3.0/24
 ```
 
 Create the `bridge` network configuration file:
