@@ -354,6 +354,98 @@ In this section you will provision an external load balancer to front the Kubern
 
 ### Provision a Network Load Balancer
 
+
+## install keepalive and HAproxy
+on each lb host `lb` and `lb2`
+```
+sudo apt install haproxy keepalived
+```
+
+
+## configure
+
+create the `keepalived.conf`  
+```
+cat > keepalived.conf <<EOF
+vrrp_script check_apiserver {
+  script "/etc/keepalived/check_apiserver.sh"
+  interval 3
+  timeout 10
+  fall 5
+  rise 2
+  weight -2
+}
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface eth0
+    virtual_router_id 1
+    priority 100
+    advert_int 5
+    authentication {
+        auth_type PASS
+        auth_pass mysecret
+    }
+    virtual_ipaddress {
+        10.10.1.40
+    }
+    track_script {
+        check_apiserver
+    }
+}
+EOF
+```
+
+
+create `check_apiserver.sh` set the IP address to the KUBERNETES_PUBLIC_ADDRESS.
+this is the VIP that the load balancer is listening on
+```
+#!/bin/sh
+
+errorExit() {
+  echo "*** " 1>&2
+  exit 1
+}
+
+curl --silent --max-time 2 --insecure https://localhost:6443/ -o /dev/null || errorExit "Error GET https://localhost:6443/"
+if ip addr | grep -q 10.10.1.40; then
+  curl --silent --max-time 2 --insecure https://10.10.1.40:6443/ -o /dev/null || errorExit "Error GET https://10.10.1.40:6443/"
+fi
+
+```
+
+set perms and move files
+```
+chmod +x check_apiserver.sh
+sudo mv check_apiserver.sh keepalived.conf
+```
+
+add to /etc/haproxy/haproxy.cfg
+```
+frontend kubernetes-frontend
+  bind *:6443
+  mode tcp
+  option tcplog
+  default_backend kubernetes-backend
+
+backend kubernetes-backend
+  option httpchk GET /healthz
+  http-check expect status 200
+  mode tcp
+  option ssl-hello-chk
+  balance roundrobin
+    server controller1 10.240.0.31:6443 check fall 3 rise 2
+    server controller2 10.240.0.32:6443 check fall 3 rise 2
+    server controller3 10.240.0.33:6443 check fall 3 rise 2
+```
+
+sudo systemctl daemon-reload
+
+
+
+
+
+
 Create the external load balancer network resources:
 
 ```
