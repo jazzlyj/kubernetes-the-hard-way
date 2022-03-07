@@ -317,10 +317,11 @@ The `kubernetes-the-hard-way` static IP address will be included in the list of 
 
 Generate the Kubernetes API Server certificate and private key:
 
+Kubernetes Public IP Address is a static IP address that will be attached to the external load balancer fronting the Kubernetes API Servers:
 ```
 {
 
-KUBERNETES_PUBLIC_ADDRESS=
+KUBERNETES_PUBLIC_ADDRESS=10.10.1.40
 
 KUBERNETES_HOSTNAMES=kubernetes,kubernetes.default,kubernetes.default.svc,kubernetes.default.svc.cluster,kubernetes.svc.cluster.local
 
