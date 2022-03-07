@@ -67,7 +67,7 @@ INTERNAL_IP=$(ip addr show eth0 | grep "inet\b" | awk '{print $2}' | cut -d/ -f1
 ```
 
 ```
-KUBERNETES_PUBLIC_ADDRESS=10.240.0.50
+KUBERNETES_PUBLIC_ADDRESS=10.10.1.50
 ```
 
 Create the `kube-apiserver.service` systemd unit file:
