@@ -423,7 +423,7 @@ Copy the appropriate certificates and private keys to each worker instance:
 
 ```
 for instance in worker1 worker2 worker3; do
-  gcloud compute scp ca.pem ${instance}-key.pem ${instance}.pem ${instance}:~/
+  scp ca.pem ${instance}-key.pem ${instance}.pem ${instance}:~/
 done
 ```
 
