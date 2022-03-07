@@ -439,7 +439,18 @@ backend kubernetes-backend
     server controller3 10.240.0.33:6443 check fall 3 rise 2
 ```
 
+
+enable and start the services
+```
+{
 sudo systemctl daemon-reload
+sudo systemctl enable haproxy
+sudo systemctl enable keepalived
+sudo systemctl start keepalived haproxy
+}
+
+```
+
 
 
 
