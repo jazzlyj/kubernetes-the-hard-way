@@ -364,7 +364,10 @@ sudo apt install haproxy keepalived
 
 ## configure
 
-create the `keepalived.conf`  
+create the `keepalived.conf`, 
+* set the interface to the correct name eg `eth0.10`  
+* set the `unicast_src` and `unicast_peer` on each host (flip them on the other host)
+* set the virtual_ipaddress with the correct subnet mask (CIDR notataion)
 ```
 cat > keepalived.conf <<EOF
 vrrp_script check_apiserver {
@@ -378,7 +381,7 @@ vrrp_script check_apiserver {
 
 vrrp_instance VI_1 {
     state BACKUP
-    interface eth0
+    interface eth0.10
     virtual_router_id 1
     priority 100
     advert_int 5
@@ -386,8 +389,10 @@ vrrp_instance VI_1 {
         auth_type PASS
         auth_pass mysecret
     }
+    unicast_src_ip 10.10.1.41
+    unicast_peer { 10.10.1.42 }
     virtual_ipaddress {
-        10.10.1.40
+        10.10.1.40/24
     }
     track_script {
         check_apiserver
@@ -422,21 +427,21 @@ sudo mv check_apiserver.sh keepalived.conf
 
 add to /etc/haproxy/haproxy.cfg
 ```
-frontend kubernetes-frontend
+frontend kube-apiserver
   bind *:6443
   mode tcp
   option tcplog
-  default_backend kubernetes-backend
+  default_backend kube-apiserver
 
-backend kubernetes-backend
+backend kube-apiserver
   option httpchk GET /healthz
   http-check expect status 200
   mode tcp
   option ssl-hello-chk
   balance roundrobin
-    server controller1 10.240.0.31:6443 check fall 3 rise 2
-    server controller2 10.240.0.32:6443 check fall 3 rise 2
-    server controller3 10.240.0.33:6443 check fall 3 rise 2
+    server controller1 10.240.0.51:6443 check fall 3 rise 2
+    server controller2 10.240.0.52:6443 check fall 3 rise 2
+    server controller3 10.240.0.53:6443 check fall 3 rise 2
 ```
 
 
@@ -457,54 +462,16 @@ sudo systemctl start keepalived haproxy
 
 
 
-Create the external load balancer network resources:
-
-```
-{
-  KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-hard-way \
-    --region $(gcloud config get-value compute/region) \
-    --format 'value(address)')
-
-  gcloud compute http-health-checks create kubernetes \
-    --description "Kubernetes Health Check" \
-    --host "kubernetes.default.svc.cluster.local" \
-    --request-path "/healthz"
-
-  gcloud compute firewall-rules create kubernetes-the-hard-way-allow-health-check \
-    --network kubernetes-the-hard-way \
-    --source-ranges 209.85.152.0/22,209.85.204.0/22,35.191.0.0/16 \
-    --allow tcp
-
-  gcloud compute target-pools create kubernetes-target-pool \
-    --http-health-check kubernetes
-
-  gcloud compute target-pools add-instances kubernetes-target-pool \
-   --instances controller-0,controller-1,controller-2
-
-  gcloud compute forwarding-rules create kubernetes-forwarding-rule \
-    --address ${KUBERNETES_PUBLIC_ADDRESS} \
-    --ports 6443 \
-    --region $(gcloud config get-value compute/region) \
-    --target-pool kubernetes-target-pool
-}
-```
 
 ### Verification
 
 > The compute instances created in this tutorial will not have permission to complete this section. **Run the following commands from the same machine used to create the compute instances**.
 
-Retrieve the `kubernetes-the-hard-way` static IP address:
-
-```
-KUBERNETES_PUBLIC_ADDRESS=$(gcloud compute addresses describe kubernetes-the-hard-way \
-  --region $(gcloud config get-value compute/region) \
-  --format 'value(address)')
-```
 
 Make a HTTP request for the Kubernetes version info:
 
 ```
-curl --cacert ca.pem https://${KUBERNETES_PUBLIC_ADDRESS}:6443/version
+curl --cacert /var/lib/kubernetes/ca.pem https://${KUBERNETES_PUBLIC_ADDRESS}:6443/version
 ```
 
 > output
@@ -513,11 +480,11 @@ curl --cacert ca.pem https://${KUBERNETES_PUBLIC_ADDRESS}:6443/version
 {
   "major": "1",
   "minor": "23",
-  "gitVersion": "v1.23.3",
-  "gitCommit": "816c97ab8cff8a1c72eccca1026f7820e93e0d25",
+  "gitVersion": "v1.23.4",
+  "gitCommit": "e6c093d87ea4cbb530a7b2ae91e54c0842d8308a",
   "gitTreeState": "clean",
-  "buildDate": "2022-01-25T21:19:12Z",
-  "goVersion": "go1.17.6",
+  "buildDate": "2022-02-16T12:32:02Z",
+  "goVersion": "go1.17.7",
   "compiler": "gc",
   "platform": "linux/amd64"
 }
