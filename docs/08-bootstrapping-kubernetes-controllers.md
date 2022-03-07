@@ -402,8 +402,8 @@ EOF
 ```
 
 
-create `check_apiserver.sh` set the IP address to the KUBERNETES_PUBLIC_ADDRESS.
-this is the VIP that the load balancer is listening on
+create `check_apiserver.sh` 
+* set the IP address to the KUBERNETES_PUBLIC_ADDRESS. this is the external network VIP that the load balancer is listening on
 ```
 #!/bin/sh
 
@@ -425,7 +425,7 @@ chmod +x check_apiserver.sh
 sudo mv check_apiserver.sh keepalived.conf
 ```
 
-add to /etc/haproxy/haproxy.cfg
+add a frontend and backend config block to `/etc/haproxy/haproxy.cfg`
 ```
 frontend kube-apiserver
   bind *:6443
@@ -456,10 +456,20 @@ sudo systemctl start keepalived haproxy
 
 ```
 
-
-
-
-
+verify with `ip a s`. NOTE the VIP `10.10.1.40/24 scope global secondary eth0.10` 
+```
+lb2 10:10:35 ~{1} ip a s
+...
+3: eth0.10@eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:5e:ac:b1 brd ff:ff:ff:ff:ff:ff
+    inet 10.10.1.42/24 brd 10.10.1.255 scope global eth0.10
+       valid_lft forever preferred_lft forever
+    inet 10.10.1.40/24 scope global secondary eth0.10
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fe5e:acb1/64 scope link 
+       valid_lft forever preferred_lft forever
+...
+```
 
 
 
