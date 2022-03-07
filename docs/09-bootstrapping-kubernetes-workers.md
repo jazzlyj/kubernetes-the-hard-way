@@ -287,26 +287,22 @@ EOF
 }
 ```
 
-> Remember to run the above commands on each worker node: `worker-0`, `worker-1`, and `worker-2`.
+> Remember to run the above commands on each worker node: `worker1`, `worker2`, and `worker3`.
 
 ## Verification
 
-> The compute instances created in this tutorial will not have permission to complete this section. Run the following commands from the same machine used to create the compute instances.
+> The compute instances created in this tutorial will not have permission to complete this section. Run the following commands from `controller1`.
 
 List the registered Kubernetes nodes:
-
 ```
-gcloud compute ssh controller-0 \
-  --command "kubectl get nodes --kubeconfig admin.kubeconfig"
+kubectl get nodes --kubeconfig admin.kubeconfig
 ```
 
 > output
 
 ```
-NAME       STATUS   ROLES    AGE   VERSION
-worker-0   Ready    <none>   22s   v1.21.0
-worker-1   Ready    <none>   22s   v1.21.0
-worker-2   Ready    <none>   22s   v1.21.0
+NAME      STATUS   ROLES    AGE   VERSION
+worker1   Ready    <none>   31m   v1.23.4
 ```
 
 Next: [Configuring kubectl for Remote Access](10-configuring-kubectl.md)
