@@ -283,7 +283,7 @@ X-Kubernetes-Pf-Prioritylevel-Uid: 8ba5908f-5569-4330-80fd-c643e7512366
 ok
 ```
 
-> Remember to run the above commands on each controller node: `controller-0`, `controller-1`, and `controller-2`.
+> Remember to run the above commands on each controller node: `controller1`, `controller2`, and `controller3`.
 
 ## RBAC for Kubelet Authorization
 
@@ -294,7 +294,7 @@ In this section you will configure RBAC permissions to allow the Kubernetes API 
 The commands in this section will effect the entire cluster and only need to be run once from one of the controller nodes.
 
 ```
-gcloud compute ssh controller-0
+ssh controller1
 ```
 
 Create the `system:kube-apiserver-to-kubelet` [ClusterRole](https://kubernetes.io/docs/admin/authorization/rbac/#role-and-clusterrole) with permissions to access the Kubelet API and perform most common tasks associated with managing pods:
@@ -355,8 +355,8 @@ In this section you will provision an external load balancer to front the Kubern
 ### Provision a Network Load Balancer
 
 
-## install keepalive and HAproxy
-on each lb host `lb` and `lb2`
+## install keepalived and HAproxy
+on each lb host `lb1` and `lb2`
 ```
 sudo apt install haproxy keepalived
 ```
