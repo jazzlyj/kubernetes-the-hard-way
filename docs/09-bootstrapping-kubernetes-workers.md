@@ -184,6 +184,7 @@ EOF
 ```
 
 Create the `kubelet-config.yaml` configuration file:
+* NOTE: using 10.32.0.1 which is also the DNS server
 
 ```
 cat <<EOF | sudo tee /var/lib/kubelet/kubelet-config.yaml
@@ -200,7 +201,7 @@ authorization:
   mode: Webhook
 clusterDomain: "cluster.local"
 clusterDNS:
-  - "10.32.0.10"
+  - "10.32.0.1"
 podCIDR: "${POD_CIDR}"
 resolvConf: "/run/systemd/resolve/resolv.conf"
 runtimeRequestTimeout: "15m"
