@@ -15,9 +15,6 @@ Each kubeconfig requires a Kubernetes API Server to connect to. To support high 
 export KUBERNETES_PUBLIC_ADDRESS='10.10.1.40'
 ```
 
-???? The hostnames controller.example.com and kubernetes.example.com are supposed to point to the VIP (10.240.0.50) of the controller nodes  ????
-
-
 ### The kubelet Kubernetes Configuration File
 
 When generating kubeconfig files for Kubelets the client certificate matching the Kubelet's node name must be used. This will ensure Kubelets are properly authorized by the Kubernetes [Node Authorizer](https://kubernetes.io/docs/admin/authorization/node/).
@@ -205,7 +202,6 @@ done
 
 Copy the appropriate `kube-controller-manager` and `kube-scheduler` kubeconfig files to each controller instance:
 * NOTE: Assumes you are doing this from controller1
-* ????: do they need to go to the etcd servers also????
 
 
 ```
