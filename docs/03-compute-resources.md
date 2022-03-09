@@ -1,7 +1,15 @@
 Previous: [Installing the Client Tools](02-client-tools.md)
 
-# Provisioning Compute Resources
+# Pre-Requisites
+* 1 "smart" configurable switch
+* 1 MAAS node
 
+
+# Provisioning Compute Resources
+* 3 Controllers
+* 3 Etcd 
+* 2 Load Balancers
+* 3 Workers
 
 
 ## Networking
@@ -10,9 +18,9 @@ The Kubernetes [networking model](https://kubernetes.io/docs/concepts/cluster-ad
 
 > Setting up network policies is out of scope for this tutorial.
 
-Assumptions - All this setup lives behind some 
+Critical Assumptions - All this setup lives behind some firewall or router that is NAT-ing a Private to Private or Public to Private Network
 
-* There are 4 networks that need to be setup.
+* There are 4 networks that need to be setup. The network #'s can be any as long as there are 4.
   * 10.10.1.0/24  - "External"/Public Net  (yes its a private address but for this tutorial it will serve as our PUBLIC network) 
   * 10.240.0.0/24  - "Internal"/Prvate Net  (the primary network that all the metal and vms will be built on)
   * 10.32.0.0/24 - Kubernetes Service network
@@ -26,16 +34,14 @@ A [subnet](https://cloud.google.com/compute/docs/vpc/#vpc_networks_and_subnets) 
 
 In this tutorial 1 host is used that serves as the router/gateway for the 3 of the networks. It could serve as the gateway for the fourth. 
 
-
-
-
+ The same node is the MAAS controller node which is used to commission/deploy all metal vm nodes  
 
 
 > The `10.240.0.0/24` IP address range can host up to 254 compute instances.
 
 ### Firewall Rules
 
-No firewall
+No firewalls. Firewall is disabled in this tutorial.
 
 
 
@@ -48,7 +54,7 @@ No firewall
 Allocate a static IP address that will be attached to the external load balancer fronting the Kubernetes API Servers:
 
 ```
-
+10.10.1.40
 ```
 
 
@@ -58,18 +64,18 @@ The compute instances in this lab will be provisioned using [Ubuntu Server](http
 
 ### Kubernetes Controllers
 
-Create three compute instances which will host the Kubernetes control plane:
+Use 3 metal nodes or create 3 VMs which will host the Kubernetes control plane:
 
 ```
 ```
 
 ### Etcd hosts
-3 hosts
+* 3 hosts
 
 
 ### Kubernetes Workers
 
-Each worker instance requires a pod subnet allocation from the Kubernetes cluster CIDR range. The pod subnet allocation will be used to configure container networking in a later exercise. The `pod-cidr` instance metadata will be used to expose pod subnet allocations to compute instances at runtime.
+Each worker instance requires a pod subnet allocation from the Kubernetes cluster CIDR range. The pod subnet allocation will be used to configure container networking in a later exercise. 
 
 > The Kubernetes cluster CIDR range is defined by the Controller Manager's `--cluster-cidr` flag. In this tutorial the cluster CIDR range will be set to `10.200.0.0/16`, which supports 254 subnets.
 
