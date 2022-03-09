@@ -24,7 +24,7 @@ Assumptions - All this setup lives behind some
 
 A [subnet](https://cloud.google.com/compute/docs/vpc/#vpc_networks_and_subnets) must be provisioned with an IP address range large enough to assign a private IP address to each node in the Kubernetes cluster.
 
-1 host that serves as the router/gateway for the 4 networks.
+In this tutorial 1 host is used that serves as the router/gateway for the 3 of the networks. It could serve as the gateway for the fourth. 
 
 
 
