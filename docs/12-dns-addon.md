@@ -17,6 +17,7 @@ serviceaccount/coredns created
 clusterrole.rbac.authorization.k8s.io/system:coredns created
 clusterrolebinding.rbac.authorization.k8s.io/system:coredns created
 configmap/coredns created
+Warning: spec.template.spec.nodeSelector[beta.kubernetes.io/os]: deprecated since v1.14; use "kubernetes.io/os" instead
 deployment.apps/coredns created
 service/kube-dns created
 ```
