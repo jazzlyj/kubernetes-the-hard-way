@@ -29,12 +29,6 @@ Print the internal IP address and Pod CIDR range for each worker instance:
 Create network routes for each worker instance:
 
 ```
-for i in 1 2 3; do
-  gcloud compute routes create kubernetes-route-10-200-${i}-0-24 \
-    --network kubernetes-the-hard-way \
-    --next-hop-address 10.240.0.6${i} \
-    --destination-range 10.200.${i}.0/24
-done
 ```
 
 List the routes in the `kubernetes-the-hard-way` VPC network:
@@ -46,12 +40,6 @@ gcloud compute routes list --filter "network: kubernetes-the-hard-way"
 > output
 
 ```
-NAME                            NETWORK                  DEST_RANGE     NEXT_HOP                  PRIORITY
-default-route-1606ba68df692422  kubernetes-the-hard-way  10.240.0.0/24  kubernetes-the-hard-way   0
-default-route-615e3652a8b74e4d  kubernetes-the-hard-way  0.0.0.0/0      default-internet-gateway  1000
-kubernetes-route-10-200-0-0-24  kubernetes-the-hard-way  10.200.0.0/24  10.240.0.20               1000
-kubernetes-route-10-200-1-0-24  kubernetes-the-hard-way  10.200.1.0/24  10.240.0.21               1000
-kubernetes-route-10-200-2-0-24  kubernetes-the-hard-way  10.200.2.0/24  10.240.0.22               1000
 ```
 
 Next: [Deploying the DNS Cluster Add-on](12-dns-addon.md)
