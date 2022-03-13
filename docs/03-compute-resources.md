@@ -5,7 +5,8 @@ Previous: [Installing the Client Tools](02-client-tools.md)
 * 1 MAAS node, which is: 
   * the DHCP server
   * PXE boot/imaging server  
-  * DNS server  
+  * DNS server
+  * the router for the 10.32.0/24, 10.10.1.0/24, and 10.200.0.0/16 networks  
 
 
 
