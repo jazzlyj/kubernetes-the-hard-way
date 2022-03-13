@@ -3,9 +3,9 @@ Previous: [Installing the Client Tools](02-client-tools.md)
 # Pre-Requisites
 * 1 "smart" configurable switch
 * 1 MAAS node, which is: 
- * the DHCP server
- * PXE boot/imaging server  
- * DNS server  
+  * the DHCP server
+  * PXE boot/imaging server  
+  * DNS server  
 
 
 
