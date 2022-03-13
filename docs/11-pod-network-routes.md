@@ -31,10 +31,9 @@ Create network routes for each worker instance:
 ```
 ```
 
-List the routes in the `kubernetes-the-hard-way` VPC network:
+List the routes VPC network:
 
 ```
-gcloud compute routes list --filter "network: kubernetes-the-hard-way"
 ```
 
 > output
