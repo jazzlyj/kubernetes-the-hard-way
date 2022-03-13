@@ -4,7 +4,9 @@ Previous: [Installing the Client Tools](02-client-tools.md)
 * 1 "smart" configurable switch
 * 1 MAAS node, which is: 
  * the DHCP server
+ * PXE boot/imaging server  
  * DNS server  
+
 
 
 # Provisioning Compute Resources
@@ -12,6 +14,8 @@ Previous: [Installing the Client Tools](02-client-tools.md)
 * 3 Etcd 
 * 2 Load Balancers
 * 3 Workers
+ALL nodes are Ubuntu 20.04.4 LTS (GNU/Linux 5.13.0-35-generic x86_64)
+
 
 
 ## Networking
@@ -100,56 +104,5 @@ Test SSH access to the `controller1` compute instances:
 ssh controller1  
 ```
 
-If this is your first time connecting to a compute instance SSH keys will be generated for you. Enter a passphrase at the prompt to continue:
-
-```
-WARNING: The public SSH key file for gcloud does not exist.
-WARNING: The private SSH key file for gcloud does not exist.
-WARNING: You do not have an SSH key for gcloud.
-WARNING: SSH keygen will be executed to generate a key.
-Generating public/private rsa key pair.
-Enter passphrase (empty for no passphrase):
-Enter same passphrase again:
-```
-
-At this point the generated SSH keys will be uploaded and stored in your project:
-
-```
-Your identification has been saved in /home/$USER/.ssh/
-Your public key has been saved in /home/$USER/.ssh/
-The key fingerprint is:
-SHA256:nz1i8jHmgQuGt+WscqP5SeIaSy5wyIJeL71MuV+QruE $USER@$HOSTNAME
-The key's randomart image is:
-+---[RSA 2048]----+
-|                 |
-|                 |
-|                 |
-|        .        |
-|o.     oS        |
-|=... .o .o o     |
-|+.+ =+=.+.X o    |
-|.+ ==O*B.B = .   |
-| .+.=EB++ o      |
-+----[SHA256]-----+
-```
-
-After the SSH keys have been updated you'll be logged into the `controller1` instance:
-
-```
-Welcome to Ubuntu 20.04.2 LTS (GNU/Linux 5.4.0-1042-gcp x86_64)
-...
-```
-
-Type `exit` at the prompt to exit the `controller-0` compute instance:
-
-```
-$USER@controller1:~$ exit
-```
-> output
-
-```
-logout
-Connection to XX.XX.XX.XXX closed
-```
 
 Next: [Provisioning a CA and Generating TLS Certificates](04-certificate-authority.md)
