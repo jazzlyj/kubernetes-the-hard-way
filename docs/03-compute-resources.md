@@ -34,6 +34,7 @@ Critical Assumptions - All this setup lives behind some firewall or router that 
   * 10.200.0.0/16  - Cluster CIDR Net
     * 10.200.$i.0/24 - POD instance i network
    
+![image](https://user-images.githubusercontent.com/13760175/159127653-cbd7def2-1e8f-41dc-9e61-6cea2bf3d9ec.png)
 
 
 
