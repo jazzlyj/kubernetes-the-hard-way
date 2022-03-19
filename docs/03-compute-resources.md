@@ -34,8 +34,7 @@ Critical Assumptions - All this setup lives behind some firewall or router that 
   * 10.200.0.0/16  - Cluster CIDR Net
     * 10.200.$i.0/24 - POD instance i network
    
-![image](https://user-images.githubusercontent.com/13760175/159127653-cbd7def2-1e8f-41dc-9e61-6cea2bf3d9ec.png)
-
+![image](https://user-images.githubusercontent.com/13760175/159127748-a89b07bd-855a-4aa9-9672-10e20c494004.png)
 
 
 A [subnet](https://cloud.google.com/compute/docs/vpc/#vpc_networks_and_subnets) must be provisioned with an IP address range large enough to assign a private IP address to each node in the Kubernetes cluster.
