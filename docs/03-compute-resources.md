@@ -27,15 +27,6 @@ The Kubernetes [networking model](https://kubernetes.io/docs/concepts/cluster-ad
 
 Critical Assumptions - All this setup lives behind some firewall or router that is NAT-ing a Private to Private or Public to Private Network
 
-* There are 4 networks that need to be setup. The network #'s can be any as long as there are 4.
-  * 10.10.1.0/24  - "External"/Public Net  (yes its a private address but for this tutorial it will serve as our PUBLIC network) 
-  * 10.240.0.0/24  - "Internal"/Prvate Net  (the primary network that all the metal and vms will be built on)
-  * 10.32.0.0/24 - Kubernetes Service network
-  * 10.200.0.0/16  - Cluster CIDR Net
-    * 10.200.$i.0/24 - POD instance i network
-   
-![image](https://user-images.githubusercontent.com/13760175/159127748-a89b07bd-855a-4aa9-9672-10e20c494004.png)
-
 
 A [subnet](https://cloud.google.com/compute/docs/vpc/#vpc_networks_and_subnets) must be provisioned with an IP address range large enough to assign a private IP address to each node in the Kubernetes cluster.
 
