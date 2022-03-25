@@ -425,7 +425,7 @@ fi
 set perms and move files
 ```
 chmod +x check_apiserver.sh
-sudo mv check_apiserver.sh keepalived.conf
+sudo mv check_apiserver.sh keepalived.conf /etc/keepalived/
 ```
 
 add a frontend and backend config block to `/etc/haproxy/haproxy.cfg`
