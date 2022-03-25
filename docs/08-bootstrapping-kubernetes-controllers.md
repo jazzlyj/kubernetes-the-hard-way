@@ -401,6 +401,9 @@ vrrp_instance VI_1 {
 EOF
 ```
 
+```
+sudo mv keepalived.conf /etc/keepalived/
+```
 
 create `check_apiserver.sh` 
 * set the IP address to the KUBERNETES_PUBLIC_ADDRESS. this is the external network VIP that the load balancer is listening on
