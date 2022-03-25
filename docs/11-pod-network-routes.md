@@ -8,37 +8,16 @@ In this lab you will create a route for each worker node that maps the node's Po
 
 ## The Routing Table
 
-In this section you will gather the information required to create routes in the `kubernetes-the-hard-way` VPC network.
+In this section you will gather the information required to set up static routes.
 
-Print the internal IP address and Pod CIDR range for each worker instance:
-
-```
-
-```
-
-> output
-
-```
-10.240.0.61 10.200.1.0/24
-10.240.0.62 10.200.2.0/24
-10.240.0.63 10.200.3.0/24
-```
 
 ## Routes
 
 Create network routes for each worker instance:
+**DONE on the physical router**
 
 ```
 ```
 
-List the routes VPC network:
-
-```
-```
-
-> output
-
-```
-```
 
 Next: [Deploying the DNS Cluster Add-on](12-dns-addon.md)
