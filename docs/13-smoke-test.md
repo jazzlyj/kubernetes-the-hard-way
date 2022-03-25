@@ -21,7 +21,8 @@ ssh etcd1  "sudo ETCDCTL_API=3 etcdctl get \
   --cacert=/etc/etcd/ca.pem \
   --cert=/etc/etcd/kubernetes.pem \
   --key=/etc/etcd/kubernetes-key.pem\
-  /registry/secrets/default/$CLUSTERNAME | hexdump -C"```
+  /registry/secrets/default/$CLUSTERNAME | hexdump -C"
+```
 
 > output
 
