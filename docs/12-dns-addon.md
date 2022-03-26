@@ -77,5 +77,7 @@ Address 1: 10.32.0.10 kube-dns.kube-system.svc.cluster.local
 Name:      kubernetes
 Address 1: 10.32.0.1 kubernetes.default.svc.cluster.local
 ```
+??? mine returned the public ip address of my uplink 
+
 
 Next: [Smoke Test](13-smoke-test.md)
