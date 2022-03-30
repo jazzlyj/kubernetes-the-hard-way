@@ -80,4 +80,8 @@ Address 1: 10.32.0.1 kubernetes.default.svc.cluster.local
 ??? mine returned the public ip address of my uplink 
 
 
+* Note: If errors occur like "reply from unexpected source" intranode pod to pod communication is probably not working and this is a known fix:
+https://github.com/kelseyhightower/kubernetes-the-hard-way/issues/662#issuecomment-989898160
+
+
 Next: [Smoke Test](13-smoke-test.md)
