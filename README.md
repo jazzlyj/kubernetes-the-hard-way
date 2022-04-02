@@ -47,3 +47,6 @@ This tutorial assumes you are setting a bare metal or vm based cluster. No cloud
 * [Deploying the DNS Cluster Add-on](docs/12-dns-addon.md)
 * [Smoke Test](docs/13-smoke-test.md)
 * [Cleaning Up](docs/14-cleanup.md)
+
+Additional Labs
+* [Persistent Storage](docs/15-persistent-storage.md)
