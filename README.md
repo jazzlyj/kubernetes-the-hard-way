@@ -15,6 +15,9 @@ Kubernetes The Hard Way is optimized for learning, which means taking the long r
 
 The target audience for this tutorial is someone planning to support a production Kubernetes cluster and wants to understand how everything fits together.
 
+## Kubernetes Architecture
+
+
 ## Cluster Details
 
 Kubernetes The Hard Way guides you through bootstrapping a highly available Kubernetes cluster with end-to-end encryption between components and RBAC authentication.
