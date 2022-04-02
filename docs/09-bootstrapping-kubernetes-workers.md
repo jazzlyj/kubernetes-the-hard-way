@@ -185,10 +185,12 @@ EOF
 
 Create the `kubelet-config.yaml` configuration file:
 
+
+
 ```
 cat <<EOF | sudo tee /var/lib/kubelet/kubelet-config.yaml
 kind: KubeletConfiguration
-apiVersion: kubelet.config.k8s.io/v1beta1
+apiVersion: kubelet.config.k8s.io/v1
 authentication:
   anonymous:
     enabled: false
@@ -208,6 +210,17 @@ tlsCertFile: "/var/lib/kubelet/${HOSTNAME}.pem"
 tlsPrivateKeyFile: "/var/lib/kubelet/${HOSTNAME}-key.pem"
 EOF
 ```
+
+???
+NOTE: DNS log errors
+discovery.k8s.io/v1beta1 EndpointSlice is deprecated in v1.21+, unavailable in v1.25+; use discovery.k8s.io/v1 EndpointSlice
+Docs say change kubelet config:
+https://kubernetes.io/docs/reference/using-api/deprecation-guide/
+apiVersion: kubelet.config.k8s.io/v1beta1 to
+apiVersion: kubelet.config.k8s.io/v1
+???
+
+
 
 > The `resolvConf` configuration is used to avoid loops when using CoreDNS for service discovery on systems running `systemd-resolved`. 
 
