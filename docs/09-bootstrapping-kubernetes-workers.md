@@ -40,6 +40,19 @@ sudo swapoff -a
 ```
 
 > To ensure swap remains off after reboot consult your Linux distro documentation.
+However this will most likely will work:
+
+* remove the swap file
+```
+sudo rm /swap.img
+```
+
+* remove it from /etc/fstab
+```
+sudo vi /etc/fstab
+# remove the line: 
+# /swap.img      none    swap    sw      0       0
+```
 
 ### Download and Install Worker Binaries
 

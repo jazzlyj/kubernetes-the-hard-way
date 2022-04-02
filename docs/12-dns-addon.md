@@ -7,7 +7,7 @@ In this lab you will deploy the [DNS add-on](https://kubernetes.io/docs/concepts
 Deploy the `coredns` cluster add-on:
 
 ```
-kubectl apply -f https://storage.googleapis.com/kubernetes-the-hard-way/coredns-1.8.yaml
+kubectl apply -f https://github.com/jazzlyj/kubernetes-the-hard-way-metal/blob/master/deployments/coredns-1.8.3.yaml
 ```
 
 > output
@@ -17,7 +17,6 @@ serviceaccount/coredns created
 clusterrole.rbac.authorization.k8s.io/system:coredns created
 clusterrolebinding.rbac.authorization.k8s.io/system:coredns created
 configmap/coredns created
-Warning: spec.template.spec.nodeSelector[beta.kubernetes.io/os]: deprecated since v1.14; use "kubernetes.io/os" instead
 deployment.apps/coredns created
 service/kube-dns created
 ```
@@ -78,5 +77,11 @@ Address 1: 10.32.0.10 kube-dns.kube-system.svc.cluster.local
 Name:      kubernetes
 Address 1: 10.32.0.1 kubernetes.default.svc.cluster.local
 ```
+??? mine returned the public ip address of my uplink 
+
+
+* Note: If errors occur like "reply from unexpected source" intranode pod to pod communication is probably not working and this is a known fix:
+https://github.com/kelseyhightower/kubernetes-the-hard-way/issues/662#issuecomment-989898160
+
 
 Next: [Smoke Test](13-smoke-test.md)
