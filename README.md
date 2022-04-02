@@ -16,7 +16,7 @@ Kubernetes The Hard Way is optimized for learning, which means taking the long r
 The target audience for this tutorial is someone planning to support a production Kubernetes cluster and wants to understand how everything fits together.
 
 ## Kubernetes Architecture
-
+https://github.com/jazzlyj/kubernetes-the-hard-way-metal/blob/master/kuberntesArch.png
 
 ## Cluster Details
 
